@@ -1,13 +1,8 @@
 pipeline { 
 
-    agent {
-        docker {
-            image "jenkins-agent-docker:latest"
-            args '-v /Users/jesusfernandezarribas/.docker/run/docker.sock:/var/run/docker.sock' 
-            reuseNode true
-            alwaysPull true
-        }
-    }
+    agent { 
+        label 'docker' 
+    } 
     
     stages { 
 
