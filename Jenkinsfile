@@ -4,12 +4,17 @@ pipeline {
     
     stages { 
 
-        stage('Source') { 
+        stage('Checkout Code') { 
 
             steps { 
-
-                git 'https://github.com/srayuso/unir-cicd.git' 
-
+                script { 
+                    checkout ([
+                        $class: 'GitSCM',
+                        branches: [[name: "*/master"]],
+                        userRemoteConfigs: [[url: 'https://github.com/srayuso/unir-cicd.git', credentialsId: 'GitHubUser']],
+                        extensions: [[$class: 'CleanBeforeCheckout']]
+                    ])
+                }
             } 
 
         } 
