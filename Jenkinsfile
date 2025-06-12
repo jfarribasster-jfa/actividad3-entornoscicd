@@ -15,7 +15,6 @@ pipeline {
                         userRemoteConfigs: [[url: 'https://github.com/srayuso/unir-cicd.git', credentialsId: 'GitHubUser']],
                         extensions: [[$class: 'CleanBeforeCheckout']]
                     ])
-                    sh 'ls -lrt'
                 }
             } 
 
@@ -45,6 +44,28 @@ pipeline {
 
         } 
 
+        stage('Test API') { 
+
+            steps { 
+
+                sh 'make test-api' 
+
+                archiveArtifacts artifacts: 'results/*.xml' 
+
+            } 
+
+        } 
+        stage('Test E2E') { 
+
+            steps { 
+
+                sh 'make test-e2e' 
+
+                archiveArtifacts artifacts: 'results/*.xml' 
+
+            } 
+
+        }
     } 
 
     post { 
