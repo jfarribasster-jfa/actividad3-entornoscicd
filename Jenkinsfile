@@ -8,12 +8,14 @@ pipeline {
 
             steps { 
                 script { 
+                    echo 'Checking out code...'
                     checkout ([
                         $class: 'GitSCM',
                         branches: [[name: "*/master"]],
                         userRemoteConfigs: [[url: 'https://github.com/srayuso/unir-cicd.git', credentialsId: 'GitHubUser']],
                         extensions: [[$class: 'CleanBeforeCheckout']]
                     ])
+                    sh 'la -lrts"'
                 }
             } 
 
