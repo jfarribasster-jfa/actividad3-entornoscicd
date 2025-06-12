@@ -15,7 +15,7 @@ pipeline {
                         userRemoteConfigs: [[url: 'https://github.com/srayuso/unir-cicd.git', credentialsId: 'GitHubUser']],
                         extensions: [[$class: 'CleanBeforeCheckout']]
                     ])
-                    sh 'la -lrt'
+                    sh 'ls -lrt'
                 }
             } 
 
