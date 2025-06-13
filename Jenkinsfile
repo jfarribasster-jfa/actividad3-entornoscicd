@@ -31,9 +31,13 @@ pipeline {
             } 
 
         } 
-        stage('Hotfix port') {
+        
+        stage('Fix Makefile Port Conflict') {
             steps {
-                sh 'sed -i.bak "s/-p 5000:5000//" Makefile'
+                sh '''
+                    # Reemplaza -p 5000:5000 por -p 5050:5000 solo en la línea relevante
+                    sed -i.bak 's/-p 5000:5000/-p 5050:5000/' Makefile
+                '''
             }
         }
 
