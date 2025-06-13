@@ -47,9 +47,9 @@ pipeline {
         stage('Test API') { 
 
             steps { 
-
+                sh 'docker rm -f apiserver || true'
+                sh 'docker network rm calc-test-api || true'
                 sh 'make test-api' 
-
                 archiveArtifacts artifacts: 'results/*.xml' 
 
             } 
