@@ -90,7 +90,24 @@ pipeline {
             cleanWs() 
 
         } 
-
-    } 
+        failure {
+            emailext(
+                subject: "Fallo en el pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>El trabajo <strong>${env.JOB_NAME}</strong> falló en la ejecución <strong>#${env.BUILD_NUMBER}</strong>.</p>
+                        <p>Revisar Jenkins para más información.</p>""",
+                to: 'jfarribasster@gmail.com',
+                mimeType: 'text/html'
+            )
+        }
+        success {
+            emailext(
+                subject: "Éxito en el pipeline: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>El trabajo <strong>${env.JOB_NAME}</strong> se completó exitosamente en la ejecución <strong>#${env.BUILD_NUMBER}</strong>.</p>
+                        <p>Revisar Jenkins para más información.</p>""",
+                to: 'jfarribasster@gmail.com',
+                mimeType: 'text/html'
+            )
+        }
+    }
 
 } 
