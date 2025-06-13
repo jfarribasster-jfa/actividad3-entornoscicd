@@ -23,15 +23,12 @@ pipeline {
         stage('Build') { 
 
             steps { 
-
                 echo 'Building stage!' 
-
                 sh 'make build' 
-
             } 
 
         } 
-        
+
         stage('Fix Makefile Port Conflict') {
             steps {
                 sh '''
@@ -54,11 +51,9 @@ pipeline {
         } 
 
         stage('Test API') { 
-
             steps { 
                 // Eliminar contenedor anterior si existe
                 sh 'docker rm -f apiserver || true'
-
                 // Eliminar red anterior si existe
                 sh 'docker network rm calc-test-api || true'
                 sh 'make test-api' 
@@ -72,7 +67,6 @@ pipeline {
             steps { 
 
                 sh 'make test-e2e' 
-
                 archiveArtifacts artifacts: 'results/*.xml' 
 
             } 
@@ -85,7 +79,11 @@ pipeline {
         always { 
 
             junit 'results/*_result.xml' 
-
+            publishHTML([ 
+                reportDir: 'results/coverage', 
+                reportFiles: 'index.html', 
+                reportName: 'Coverage Report' 
+            ])
             cleanWs() 
 
         } 
