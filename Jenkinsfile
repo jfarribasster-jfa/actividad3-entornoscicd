@@ -79,11 +79,14 @@ pipeline {
         always { 
 
             junit 'results/*_result.xml' 
-            publishHTML([ 
-                reportDir: 'results/coverage', 
-                reportFiles: 'index.html', 
-                reportName: 'Coverage Report' 
-            ])
+            publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'results/coverage',
+                    reportFiles: 'index.html',
+                    reportName: 'Coverage Report'
+                ])
             cleanWs() 
 
         } 
