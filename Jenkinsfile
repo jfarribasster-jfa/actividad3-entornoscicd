@@ -31,6 +31,11 @@ pipeline {
             } 
 
         } 
+        stage('Hotfix port') {
+            steps {
+                sh 'sed -i.bak "s/-p 5000:5000//" Makefile'
+            }
+        }
 
         stage('Unit tests') { 
 
