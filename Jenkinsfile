@@ -47,6 +47,11 @@ pipeline {
         stage('Test API') { 
 
             steps { 
+                // Eliminar contenedor anterior si existe
+                sh 'docker rm -f apiserver || true'
+
+                // Eliminar red anterior si existe
+                sh 'docker network rm calc-test-api || true'
                 sh 'make test-api' 
                 archiveArtifacts artifacts: 'results/*.xml' 
 
